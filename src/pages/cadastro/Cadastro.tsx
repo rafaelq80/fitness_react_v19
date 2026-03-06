@@ -184,7 +184,7 @@ function Cadastro() {
 								selected={
 									usuario.dataNascimento ? new Date(usuario.dataNascimento) : null
 								}
-								onChange={(date) => {
+								onChange={(date: Date | null) => {
 									setUsuario({
 										...usuario,
 										dataNascimento: date ? date.toISOString().split("T")[0] : "",
