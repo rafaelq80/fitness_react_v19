@@ -21,25 +21,19 @@ function ListarDieta() {
 	async function buscarDieta() {
 		setIsLoading(true)
 		setErro(false)
+		setDieta(null)
 
 		try {
-			const response: any = {}
-			await listar(`/usuarios/gerardieta/${usuario.id}`, (data: any) => {
-				Object.assign(response, data)
+			await listar(`/usuarios/gerardieta/${usuario.id}`, (data: Dieta) => {
+				if (data?.refeicoes?.length > 0) {
+					setDieta(data)
+				} else {
+					console.error('Estrutura de resposta inesperada:', data)
+					setErro(true)
+				}
 			}, {
 				headers: { Authorization: token },
 			})
-			
-			// Verifica se a resposta tem a estrutura esperada
-			if (response.planoAlimentar) {
-				setDieta(response.planoAlimentar)
-			} else if (response.refeicoes) {
-				// Se vier direto com refeicoes
-				setDieta(response)
-			} else {
-				console.error('Estrutura de resposta inesperada:', response)
-				setErro(true)
-			}
 		} catch (error: any) {
 			console.error('Erro ao buscar dieta:', error)
 			if (error.toString().includes('401')) {
@@ -63,9 +57,6 @@ function ListarDieta() {
 		buscarDieta()
 	}, [])
 
-	// Verifica se existem refeições válidas
-	const temRefeicoes = dieta?.refeicoes && Array.isArray(dieta.refeicoes) && dieta.refeicoes.length > 0
-
 	return (
 		<div className="min-h-screen bg-linear-to-br from-slate-50 to-slate-100 py-8">
 			<div className="container mx-auto px-4">
@@ -79,7 +70,7 @@ function ListarDieta() {
 								Gerando seu plano alimentar personalizado...
 							</p>
 						</div>
-					) : erro || !temRefeicoes ? (
+					) : erro || !dieta ? (
 						<div className="bg-white rounded-2xl shadow-lg overflow-hidden">
 							<div className="bg-linear-to-r from-red-600 to-red-700 p-6">
 								<div className="flex items-center gap-3">
@@ -98,7 +89,7 @@ function ListarDieta() {
 									</div>
 								</div>
 							</div>
-							
+
 							<div className="p-8 text-center">
 								<div className="mb-6">
 									<div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -192,9 +183,9 @@ function ListarDieta() {
 											Importante: Orientação Profissional
 										</h3>
 										<p className="text-xs text-amber-800 leading-relaxed">
-											Este plano alimentar foi gerado por Inteligência Artificial (Google Gemini) 
-											e serve como uma ferramenta de apoio. Para um acompanhamento adequado e 
-											personalizado às suas necessidades específicas, consulte sempre um nutricionista 
+											Este plano alimentar foi gerado por Inteligência Artificial
+											e serve como uma ferramenta de apoio. Para um acompanhamento adequado e
+											personalizado às suas necessidades específicas, consulte sempre um nutricionista
 											ou profissional de saúde qualificado.
 										</p>
 									</div>
