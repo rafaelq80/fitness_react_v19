@@ -1,73 +1,123 @@
-# React + TypeScript + Vite
+# Projeto Aplicativo Fitness - Frontend 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<br />
 
-Currently, two official plugins are available:
+<div align="center">
+    <img src="https://i.imgur.com/AzshGmS.png" title="source: imgur.com" width="50%"/>
+</div>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## React Compiler
+<br /><br />
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 1. Descrição
 
-## Expanding the ESLint configuration
+O Projeto Aplicativo Fitness é um **frontend** desenvolvido com o **Vite** e o **React** para consumir uma API de Aplicativo Fitness, desenvolvida em **NestJS**. A aplicação permite o gerenciamento dos **Usuários**, **Exercícios** e **Categorias**, além de utilizar autenticação por usuário e senha, com validação de token **JWT** para proteger as rotas e garantir a segurança da aplicação.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 1.1. Principais Funcionalidades
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **Autenticação por Usuário e Senha**: Login seguro para controlar o acesso dos usuários.
+- **Validação de Token JWT**: Proteção de rotas e verificação de token para acessar recursos privados.
+- **CRUD de Usuários**: Criação, leitura e atualização de perfis de usuários.
+- **CRUD de Exercícios**: Gerenciamento dos exercícios.
+- **CRUD de Categorias**: Gerenciamento das categorias.
+- **Cálculo do IMC do usuário**.
+- **Geração de Dieta com IA**.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+------
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 2. Tecnologias
+
+| Item                         | Descrição  |
+| ---------------------------- | ---------- |
+| **Servidor**                 | Node JS    |
+| **Linguagem de programação** | TypeScript |
+| **Biblioteca**               | React JS   |
+| **Build**                    | Vite       |
+| **Estilização**              | Tailwind   |
+
+---
+
+## 3. Pré-requisitos
+
+Antes de iniciar, certifique-se de ter as seguintes ferramentas instaladas:
+
+- [Node.js](https://nodejs.org/) (v16+)
+- Backend da API NestJS rodando ([Repositório da API](https://github.com/rafaelq80/crm-nest))
+
+---
+
+## 4. Instalação - Ambiente Local
+
+### 4.1. Clonando o repositório
+
+```bash
+git clone https://github.com/usuario/fitness-react.git
+cd crm-react
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 4.2. Instalando as dependências
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Utilize o comando abaixo para instalar todas as bibliotecas através do npm:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm
 ```
+
+### 4.3. Configuração do ambiente
+
+A URL da API NestJS deve estar apontando para o endereço abaixo:
+
+```bash
+http://localhost:4000
+```
+
+### 4.4. Executando o projeto
+
+Inicie o servidor de desenvolvimento com o npm:
+
+```bash
+npm dev
+```
+
+A aplicação estará disponível no enderço: `http://localhost:5173`
+
+---
+
+## 5. Estrutura do Projeto
+
+```plaintext
+src/
+│
+├── components/       # Componentes reutilizáveis
+├── contexts/         # Gerenciamento de estado global (ex: autenticação)
+├── models/           # Estrutura de dados da aplicação-
+├── pages/            # Páginas da aplicação
+├── services/         # Integração com a API (requisições HTTP)
+├── utils/            # Funções auxiliares (alerts)
+└── App.tsx           # Componente principal da aplicação
+```
+
+---
+
+## 6. Autenticação e Validação de Token JWT
+
+### Fluxo de Autenticação
+
+1. O usuário realiza o login com **e-mail** e **senha**.
+2. A aplicação faz uma requisição para a API, que retorna um token **JWT**.
+3. O token é armazenado na **Context API** para uso em futuras requisições autenticadas.
+4. Nas rotas protegidas, o token é validado antes do acesso aos recursos.
+
+### Controle de Autenticação
+
+- Se o token expirar ou for inválido, o usuário será redirecionado para a página de login.
+
+------
+
+## 7. Implementações Futuras
+
+- [ ] Implementar o Simulador de Programa de Exercícios
+- [ ] Implementar a Busca de exercício na página inicial
+- [ ] Implementar a Atualização do Perfil
+- [ ] Implementar o Formulário de Contato
+- [x] Implementar a Listagem de Exercícios por Categoria
