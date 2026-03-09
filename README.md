@@ -34,6 +34,7 @@ O Projeto Aplicativo Fitness é um **frontend** desenvolvido com o **Vite** e o 
 | **Biblioteca**               | React JS   |
 | **Build**                    | Vite       |
 | **Estilização**              | Tailwind   |
+| **Consumo de API**           | Axios      |
 
 ---
 
@@ -60,7 +61,7 @@ cd crm-react
 Utilize o comando abaixo para instalar todas as bibliotecas através do npm:
 
 ```bash
-npm
+npm install
 ```
 
 ### 4.3. Configuração do ambiente
@@ -76,7 +77,7 @@ http://localhost:4000
 Inicie o servidor de desenvolvimento com o npm:
 
 ```bash
-npm dev
+npm run dev
 ```
 
 A aplicação estará disponível no enderço: `http://localhost:5173`
